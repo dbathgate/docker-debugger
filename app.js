@@ -1,20 +1,25 @@
 var http = require('http');
 var os = require('os');
+var express = require('express');
 
-var handleRequest = function(request, response) {
-  response.writeHead(200);
+var app = express();
 
-  var body = "";
+app.get('/env', function(req, res) {
+  var body = '';
 
-  body = body + "Environment Variables:\n\n";
   Object.keys(process.env).forEach(function (key) {
     body = body + key + "=" + process.env[key] + "\n";
   });
 
-  body = body + "\n\nHost:\n\n";
-  body = body + "Hostname: " + os.hostname() + "\n";
+  res.end(body);
+});
 
-  body = body + "\n\nNetwork Interfaces:\n\n";
+app.get('/hostname', function(req, res) {
+  res.end(os.hostname() + '\n');
+});
+
+app.get('/interfaces', function(req, res) {
+  var body = '';
 
   var ifaces = os.networkInterfaces();
   Object.keys(ifaces).forEach(function (ifname) {
@@ -22,7 +27,8 @@ var handleRequest = function(request, response) {
       body = body + ifname + ": " + iface.address + "\n";
     });
   });
-  response.end(body);
-}
-var www = http.createServer(handleRequest);
-www.listen(18080);
+
+  res.end(body);
+});
+
+app.listen(18080);

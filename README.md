@@ -1,24 +1,27 @@
 # docker-debug-container
 * Returns environment variables, hostname, and network interfaces
 
+## Print Environment Variables:
 ```
-$ curl 10.1.2.55:18080
+$ curl 127.0.0.1:18080/env
 
-Environment Variables:
-
-NODE_VERSION=0.12.13
 HOSTNAME=e98166d1f700
 HOME=/root
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 PWD=/
+```
 
+## Print Hostname:
+```
+$ curl 127.0.0.1:18080/hostname
 
-Host:
+e98166d1f700
+```
 
-Hostname: e98166d1f700
+## Print Network Interfaces
 
-
-Network Interfaces:
+```
+$ curl 127.0.0.1:18080/interfaces
 
 lo: 127.0.0.1
 lo: ::1
